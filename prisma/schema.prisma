@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi", "fullTextSearchPostgres"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// User Modal
+model User {
+  id              String    @id @default(uuid())
+  fullName        String
+  email           String    @unique
+  isEmailVerified Boolean   @default(false)
+  username        String    @unique @db.VarChar(255)
+  password        String
+  role            String    @default("CUSTOMER")
+  refreshToken    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  orders          Order[]
+  address         Address[]
+}
+
+model Address {
+  id      Int     @id @default(autoincrement())
+  line1   String
+  city    String
+  pincode Int
+  state   String
+  country String
+  user    User    @relation(fields: [userId], references: [id])
+  userId  String
+  orders  Order[]
+}
+
+// Product Modal
+model Product {
+  id                    String                  @id @default(uuid())
+  title                 String
+  description           String
+  actualPrice           Float
+  discountedPrice       Float
+  discount              Int                     @default(0)
+  rating                Float                   @default(0)
+  slug                  String                  @unique
+  stock                 Int
+  category              String
+  productImages         ProductImages[]
+  additionalProductInfo AdditionalProductInfo[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  OrderItem             OrderItem[]
+}
+
+model ProductImages {
+  id        Int     @id @default(autoincrement())
+  url       String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+model AdditionalProductInfo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String
+}
+
+// Order Modal
+model Order {
+  id              String      @id @default(uuid())
+  subTotal        Float
+  taxPrice        Float
+  deliveryCharges Int         @default(0)
+  totalPrice      Float
+  quantity        Int
+  addressId       Int
+  shippingAddress Address     @relation(fields: [addressId], references: [id])
+  customerId      String
+  customer        User        @relation(fields: [customerId], references: [id])
+  paymentStatus   String      @default("UNPAID")
+  orderStatus     String      @default("IN PROGRESS")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  OrderItem       OrderItem[]
+}
+
+// Order and Product model relation
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}

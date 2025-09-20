@@ -3,33 +3,33 @@ import { verifyAccessToken } from "@/lib/auth";
 
 export async function GET(request: Request) {
 
-    const { isAuthenticated, user } = await verifyAccessToken();
-
-    if (!isAuthenticated || !user) {
-        return Response.json({
-            error: {
-                code: "unauthorized",
-                message: "Please Login.",
-            },
-            success: false,
-        },
-            { status: 401 }
-        );
-    }
-
-    if (user.role !== "ADMIN") {
-        return Response.json({
-            error: {
-                code: "unauthorized_access",
-                message: "You don't have permission to access the resource.",
-            },
-            success: false,
-        },
-            { status: 403 }
-        );
-    }
-
     try {
+        const { isAuthenticated, user } = await verifyAccessToken();
+
+        if (!isAuthenticated || !user) {
+            return Response.json({
+                error: {
+                    code: "unauthorized",
+                    message: "Please Login.",
+                },
+                success: false,
+            },
+                { status: 401 }
+            );
+        }
+
+        if (user.role !== "ADMIN") {
+            return Response.json({
+                error: {
+                    code: "unauthorized_access",
+                    message: "You don't have permission to access the resource.",
+                },
+                success: false,
+            },
+                { status: 403 }
+            );
+        }
+
         const orders = await db.order.findMany({
             include: {
                 OrderItem: {

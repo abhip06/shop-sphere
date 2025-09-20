@@ -15,26 +15,28 @@ const OrderDetails = ({ orderId }: { orderId: string }) => {
     const [loading, setLoading] = useState<Boolean>(true);
     const [order, setOrder] = useState<Order | null>(null);
 
-    const fetchOrderInfo = async () => {
-        try {
-            const response = await fetch(`/api/orders/${orderId}`);
-            const responseData = await response.json();
-
-            if (!responseData.success) {
-                toast.error(responseData?.message || "Could'nt fetch Order info.");
-                return;
-            }
-
-            setOrder(responseData.order);
-            console.log(responseData.order);
-        } catch (error) {
-            toast.error("Something went wrong.");
-        } finally {
-            setLoading(false);
-        }
-    }
-
+    
     useEffect(() => {
+        
+        const fetchOrderInfo = async () => {
+            try {
+                const response = await fetch(`/api/orders/${orderId}`);
+                const responseData = await response.json();
+    
+                if (!responseData.success) {
+                    toast.error(responseData?.message || "Could'nt fetch Order info.");
+                    return;
+                }
+    
+                setOrder(responseData.order);
+                console.log(responseData.order);
+            } catch (error) {
+                toast.error("Something went wrong.");
+            } finally {
+                setLoading(false);
+            }
+        }
+        
         fetchOrderInfo();
     }, []);
 

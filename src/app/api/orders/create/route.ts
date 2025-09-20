@@ -32,7 +32,7 @@ export async function POST(request: Request) {
             },
             success: false,
         },
-            { status: 400 }
+            { status: 401 }
         );
     }
 

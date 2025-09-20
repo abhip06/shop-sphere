@@ -1,7 +1,9 @@
 
 import ProductList from "@/app/products/_components/ProductList"
+import Loader from "@/components/Loader";
 import { Metadata } from "next"
 import Image from "next/image"
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -35,7 +37,9 @@ const page = () => {
       </div>
 
       {/* PRODUCT LISTING */}
-      <ProductList />
+      <Suspense fallback={<Loader />}>
+        <ProductList />
+      </Suspense>
 
     </div>
   );

@@ -21,11 +21,17 @@ const EditAddressModal: React.FC<EditAddressModalProps> = ({ address, modalState
     const [updatedAddress, setUpdatedAddress] = useState<AddressType | null>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        const isNumberField = ["pincode"].includes(name);
-        const processedValue = isNumberField ? Number(value) : value;
-        setUpdatedAddress({ [name]: processedValue });
-    };
+    const { name, value } = e.target;
+    const isNumberField = ["pincode"].includes(name);
+    const processedValue = isNumberField ? Number(value) : value;
+
+    setUpdatedAddress(prev => 
+        prev 
+        ? { ...prev, [name]: processedValue } 
+        : { ...address, [name]: processedValue } as AddressType
+    );
+};
+
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -47,6 +53,8 @@ const EditAddressModal: React.FC<EditAddressModalProps> = ({ address, modalState
                         <input
                             type="text"
                             name="line1"
+                            value={updatedAddress?.line1 || ""}
+                            onChange={handleInputChange}
                             placeholder="Enter Line 1"
                             className={`relative ring-1 rounded-md p-4 outline-none bg-transparent`}
                         />
@@ -56,6 +64,8 @@ const EditAddressModal: React.FC<EditAddressModalProps> = ({ address, modalState
                         <input
                             type="text"
                             name="city"
+                            value={updatedAddress?.city || ""}
+                            onChange={handleInputChange}
                             placeholder="Enter City"
                             className={`relative ring-1 rounded-md p-4 outline-none bg-transparent`}
                         />
@@ -65,6 +75,8 @@ const EditAddressModal: React.FC<EditAddressModalProps> = ({ address, modalState
                         <input
                             type="text"
                             name="state"
+                            value={updatedAddress?.state || ""}
+                            onChange={handleInputChange}
                             placeholder="Enter State"
                             className={`relative ring-1 rounded-md p-4 outline-none bg-transparent`}
                         />
@@ -74,6 +86,8 @@ const EditAddressModal: React.FC<EditAddressModalProps> = ({ address, modalState
                         <input
                             type="text"
                             name="country"
+                            value={updatedAddress?.country || ""}
+                            onChange={handleInputChange}
                             placeholder="Enter Country"
                             className={`relative ring-1 rounded-md p-4 outline-none bg-transparent`}
                         />
@@ -83,6 +97,8 @@ const EditAddressModal: React.FC<EditAddressModalProps> = ({ address, modalState
                         <input
                             type="number"
                             name="pincode"
+                            value={updatedAddress?.pincode || ""}
+                            onChange={handleInputChange}
                             placeholder="Enter Pincode"
                             className={`relative ring-1 rounded-md p-4 outline-none bg-transparent`}
                         />

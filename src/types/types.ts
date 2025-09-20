@@ -50,7 +50,7 @@ export interface ProductType {
     updatedAt?: Date;
 }
 
-interface OrderItemType {
+export interface OrderItemType {
     id: number;
     orderId?: string;
     productId?: string;

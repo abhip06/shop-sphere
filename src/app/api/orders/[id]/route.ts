@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
                 },
                 success: false,
             },
-                { status: 400 }
+                { status: 401 }
             );
         }
 

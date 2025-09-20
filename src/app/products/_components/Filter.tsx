@@ -50,20 +50,22 @@ const Filter = () => {
         setFilterApplied(false);
     }
 
-    const applyFilters = debounce(() => {
-        const params = new URLSearchParams(searchParams);
-        Object.entries(filters).forEach(([key, value]) => {
-            if (value) {
-                params.set(key, value);
-            } else {
-                params.delete(key); // Remove empty filters from the URL
-            }
-        });
-        replace(`${pathname}?${params.toString()}`);
-    }, 300);  // Debounce filter application for better performance
-
+    
     useEffect(() => {
+        
+        const applyFilters = debounce(() => {
+            const params = new URLSearchParams(searchParams);
+            Object.entries(filters).forEach(([key, value]) => {
+                if (value) {
+                    params.set(key, value);
+                } else {
+                    params.delete(key); // Remove empty filters from the URL
+                }
+            });
+            replace(`${pathname}?${params.toString()}`);
+        }, 300);
         applyFilters();
+        
     }, [filters]);
 
     return (

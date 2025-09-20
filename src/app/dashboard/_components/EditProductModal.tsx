@@ -144,7 +144,11 @@ const EditProductModal: React.FC<EditProductModalProps> = ({ product, onClose, o
                         ))}
                         {imagePreviews.map((preview, index) => (
                             <div key={`preview-${index}`} className="relative w-24 h-24">
-                                <img src={preview} alt="New Product" className="object-cover w-full h-full rounded" />
+                                <Image
+                                    src={preview}
+                                    alt="New Product"
+                                    className="object-cover w-full h-full rounded"
+                                />
                                 <button
                                     className="absolute top-1 right-1 text-white"
                                     onClick={() => {
@@ -366,7 +370,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({ product, onClose, o
                                     type="text"
                                     name="title"
                                     value={info.title}
-                                    onChange={(e)=>handleAdditionalInfoChange(index, "title", e.target.value)}
+                                    onChange={(e) => handleAdditionalInfoChange(index, "title", e.target.value)}
                                     placeholder="Enter Product Title"
                                     className={`relative ring-1 rounded-md p-4 outline-none bg-transparent ${validationIssue?.title ? "ring-red-500" : "ring-violet-500"}`}
                                 />
@@ -389,7 +393,7 @@ const EditProductModal: React.FC<EditProductModalProps> = ({ product, onClose, o
                                 <textarea
                                     name="description"
                                     value={info.description}
-                                    onChange={(e)=>handleAdditionalInfoChange(index, "description", e.target.value)}
+                                    onChange={(e) => handleAdditionalInfoChange(index, "description", e.target.value)}
                                     placeholder="Enter Product Title"
                                     className={`relative ring-1 rounded-md p-4 outline-none bg-transparent ${validationIssue?.description ? "ring-red-500" : "ring-violet-500"}`}
                                 />

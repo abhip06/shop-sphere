@@ -18,24 +18,25 @@ const SaleTimer = () => {
         day: "numeric",
     });
 
-    const getTime = () => {
-        const time = Date.parse(deadline) - Date.now();
-
-        setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
-        setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
-        setMinutes(Math.floor((time / (1000 * 60)) % 60));
-        setSeconds(Math.floor((time / 1000) % 60));
-    }
-
+    
     useEffect(() => {
-        console.log(deadline);
+        
+        const getTime = () => {
+            const time = Date.parse(deadline) - Date.now();
+    
+            setDays(Math.floor(time / (1000 * 60 * 60 * 24)));
+            setHours(Math.floor((time / (1000 * 60 * 60)) % 24));
+            setMinutes(Math.floor((time / (1000 * 60)) % 60));
+            setSeconds(Math.floor((time / 1000) % 60));
+        }
 
         const interval = setInterval(() => {
             getTime();
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [])
+    }, [deadline])
+    
     return (
         <div className="flex flex-col justify-center items-start gap-3 bg-violet-100 rounded-md p-7">
             <h2 className="text-lg text-gray-500 font-medium">Sale ends in</h2>

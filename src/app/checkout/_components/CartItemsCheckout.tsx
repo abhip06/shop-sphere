@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { formatPrice } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { authStore } from '@/store/Auth'
@@ -53,10 +53,10 @@ const CartItemsCheckout = () => {
     const [taxPrice, setTaxPrice] = useState<number>(0);
     const [totalPrice, setTotalPrice] = useState<number>(0);
 
-    const calculatePrices = () => {
+    const calculatePrices = useCallback(() => {
         setTaxPrice(cartTotal * 0.005);
         setTotalPrice(cartTotal + taxPrice + shippingCharges);
-    };
+    }, [cartTotal, taxPrice, shippingCharges]);
 
     const transformCartToOrderItems = () => {
         return items.map((item) => ({
@@ -119,7 +119,7 @@ const CartItemsCheckout = () => {
             calculatePrices();
         }
         setLoading(false);
-    }, [authStatus, hydrated, user, items, taxPrice]);
+    }, [authStatus, hydrated, user, items, taxPrice, calculatePrices, router]);
 
     if (loading) {
         return <CheckoutSkeletonLoader />

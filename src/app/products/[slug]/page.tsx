@@ -87,50 +87,6 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
     setQuantity(newQuantity); // Update the quantity
   };
 
-  const getProductInfo = async () => {
-
-    setError(null);
-
-    try {
-
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 10000); // 10 sec timeout
-
-      const response = await fetch(`/api/products/${params.slug}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        signal: controller.signal
-      });
-
-      clearTimeout(timeout);
-
-      if (response.status === 500) {
-        setError("Something went wrong. Try again later.");
-        return;
-      }
-
-      const responseData = await response.json();
-
-      if (response.status === 200) {
-        setProduct(responseData.product);
-        return;
-      }
-
-      if (!response.ok) {
-        console.log("Error occured while fetching product info.\n");
-        setError(responseData.error?.message ?? "Error occured while fetching Product Info.");
-        return;
-      }
-    } catch (error) {
-      setError("Failed to fetch product info.");
-      console.log("Error occured while fetching product info.\n", error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   const handleBuyProduct = () => {
     if (!authStatus) {
       router.push("/sign-in");
@@ -140,6 +96,51 @@ const ProductPage = ({ params }: { params: { slug: string } }) => {
   }
 
   useEffect(() => {
+
+    const getProductInfo = async () => {
+
+      setError(null);
+
+      try {
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000); // 10 sec timeout
+
+        const response = await fetch(`/api/products/${params.slug}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          signal: controller.signal
+        });
+
+        clearTimeout(timeout);
+
+        if (response.status === 500) {
+          setError("Something went wrong. Try again later.");
+          return;
+        }
+
+        const responseData = await response.json();
+
+        if (response.status === 200) {
+          setProduct(responseData.product);
+          return;
+        }
+
+        if (!response.ok) {
+          console.log("Error occured while fetching product info.\n");
+          setError(responseData.error?.message ?? "Error occured while fetching Product Info.");
+          return;
+        }
+      } catch (error) {
+        setError("Failed to fetch product info.");
+        console.log("Error occured while fetching product info.\n", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     getProductInfo();
   }, []);
 

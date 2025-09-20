@@ -22,10 +22,9 @@ const SearchInput = ({
     useEffect(() => {
         if (debouncedQuery.trim()) {
             const encodedQuery = encodeURIComponent(debouncedQuery).replace(/%20/g, "+");
-            console.log("Search Input -> " + encodedQuery);
             router.push(`/products?search=${encodedQuery}`);
         }
-    }, [debouncedQuery]);
+    }, [debouncedQuery, router]);
 
 
     return searchOpen && (

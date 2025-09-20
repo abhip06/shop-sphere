@@ -1,6 +1,6 @@
 "use client"
 
-import React, { Suspense, useEffect, useMemo, useState } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import ProductCard from '../../../components/ProductCard';
 import Skeleton from '../../../components/Skeleton';
 import { useSearchParams } from 'next/navigation';
@@ -27,15 +27,12 @@ const ProductList = () => {
     }), [searchParams]);
 
     // Fetch products based on search or filter
-    const fetchProducts = async () => {
+    const fetchProducts = useCallback(async () => {
         setLoading(true);
         try {
-            // let searchQuery = searchParams.get("search") || "";
             let url = "/api/products";
 
-            // Add search query and filters to the URL
             const queryParams = new URLSearchParams();
-
             if (searchQuery) queryParams.append("search", searchQuery);
             if (filterParams.type) queryParams.append("type", filterParams.type);
             if (filterParams.minPrice) queryParams.append("min", filterParams.minPrice);
@@ -43,30 +40,24 @@ const ProductList = () => {
             if (filterParams.category) queryParams.append("category", filterParams.category);
             if (filterParams.sort) queryParams.append("sort", filterParams.sort);
 
-            if (queryParams.values().some((val) => val)) {
+            if (queryParams.toString()) {
                 url += `?${queryParams.toString()}`;
             }
 
-            // console.log(queryParams);
-            console.log(searchQuery);
-            // console.log(filterParams);
-            console.log(url);
-
             const response = await fetch(url);
             const data = await response.json();
-
-            setProducts(data.products); // Update the product list
+            setProducts(data.products);
         } catch (error) {
             console.error("Error fetching products:", error);
         } finally {
             setLoading(false);
         }
-    };
+    }, [searchQuery, filterParams]);
 
     // Fetch products when search query or filter parameters change
     useEffect(() => {
         fetchProducts();
-    }, [searchQuery, filterParams]); // Only trigger re-fetch when search or filters change
+    }, [fetchProducts]);
 
     return (
         <>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import Image from "next/image";
 import { ProductType } from "@/types/types";
 import { formatPrice } from "@/lib/utils";
@@ -47,24 +47,19 @@ const SingleProductCheckout = ({
   const shippingCharges = 25;
   const totalPrice = useMemo(() => productPrice + taxPrice + shippingCharges, [productPrice, taxPrice]);
 
-  const fetchProductInfo = async () => {
+  const fetchProductInfo = useCallback(async () => {
     setError("");
-
     try {
       const response = await fetch(`/api/products/get-product/${productId}`);
-      if (!response.ok) {
-        throw new Error("Error occurred while fetching product info.");
-      }
-
+      if (!response.ok) throw new Error("Error occurred while fetching product info.");
       const data = await response.json();
       setProduct(data.product);
-
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred");
     } finally {
       setLoading(false);
     }
-  }
+  }, [productId]);
 
   const handlePlaceOrder = async () => {
     setLoading(true);
@@ -77,11 +72,11 @@ const SingleProductCheckout = ({
       quantity: Number(quantity),
       addressId: 1,
       products: [{
-          productId,
-          quantity: Number(quantity),
-          price: product!.discountedPrice
-        }],
-        paymentStatus: "UNPAID"
+        productId,
+        quantity: Number(quantity),
+        price: product!.discountedPrice
+      }],
+      paymentStatus: "UNPAID"
     }
 
     try {
@@ -104,7 +99,7 @@ const SingleProductCheckout = ({
 
     } catch (err) {
       toast.error("Something went wrong while placing the order.");
-    } finally{
+    } finally {
       setLoading(false);
     }
   }
@@ -117,7 +112,7 @@ const SingleProductCheckout = ({
     }
 
     fetchProductInfo();
-  }, [productId, hydrated, authStatus, user]);
+  }, [productId, hydrated, authStatus, user, fetchProductInfo, router]);
 
   if (loading) {
     return <CheckoutSkeletonLoader />

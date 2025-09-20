@@ -15,7 +15,7 @@ export async function DELETE(request: NextRequest) {
                 },
                 success: false,
             },
-                { status: 400 }
+                { status: 401 }
             );
         }
 

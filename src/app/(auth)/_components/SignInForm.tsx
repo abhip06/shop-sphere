@@ -195,7 +195,7 @@ const SignInForm = () => {
             </form>
 
             <p className="text-center my-5">
-                Don't have account?{" "}
+                {"Don't have account? "}
                 <Link href="/sign-up" className="text-blue-700 underline">
                     Sign up
                 </Link>

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
             },
             success: false,
         },
-            { status: 400 }
+            { status: 401 }
         );
     }
 
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
             },
             success: false,
         },
-            { status: 400 }
+            { status: 403 }
         );
     }
 

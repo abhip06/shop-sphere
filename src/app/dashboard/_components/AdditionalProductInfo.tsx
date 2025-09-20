@@ -1,7 +1,7 @@
 "use client"
 
 import { additionalProductInfoValidation } from '@/validations/addProduct.validation';
-import React, { ChangeEvent, useState } from 'react'
+import React from 'react'
 import { z } from 'zod';
 
 // interface ValidationIssue {
@@ -114,5 +114,7 @@ const AdditionalProductInfo = React.memo(
             </div>
         )
     })
+
+AdditionalProductInfo.displayName = "AdditionalProductInfo";
 
 export default AdditionalProductInfo

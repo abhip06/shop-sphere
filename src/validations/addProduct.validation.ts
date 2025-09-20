@@ -4,11 +4,11 @@ export const addProductValidation = z.object({
     title: z
         .string({ required_error: "Title is required" })
         .min(5, { message: "Title must have more than 5 characters" })
-        .max(50, { message: "Title should be less than 50 characters" }),
+        .max(100, { message: "Title should be less than 100 characters" }),
     description: z
         .string({ required_error: "Description is required" })
         .min(5, { message: "Description must have more than 5 characters" })
-        .max(200, { message: "Description should be less than 200 characters" }),
+        .max(300, { message: "Description should be less than 300 characters" }),
     actualPrice: z
         .number({ required_error: "Actual Price is required" })
         .min(0, "Actual Price should not less than 0"),
@@ -116,11 +116,11 @@ export const basicInfoValidation = z.object({
     title: z
         .string({ required_error: "Title is required" })
         .min(5, { message: "Title must have more than 5 characters" })
-        .max(50, { message: "Title should be less than 50 characters" }),
+        .max(100, { message: "Title should be less than 100 characters" }),
     description: z
         .string({ required_error: "Description is required" })
         .min(5, { message: "Description must have more than 5 characters" })
-        .max(200, { message: "Description should be less than 200 characters" }),
+        .max(300, { message: "Description should be less than 300 characters" }),
     actualPrice: z
         .number({ required_error: "Actual Price is required" })
         .min(0, "Actual Price should not less than 0"),

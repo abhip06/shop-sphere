@@ -29,7 +29,7 @@ export async function GET(request: Request) {
                 },
                 success: false,
             },
-                { status: 400 }
+                { status: 404 }
             );
         }
     

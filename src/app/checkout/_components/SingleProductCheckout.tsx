@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ProductType } from "@/types/types";
 import { formatPrice } from "@/lib/utils";
 import CheckoutSkeletonLoader from "./CheckoutSkeletonLoader";
-import { authStore } from "@/app/store/Auth";
+import { authStore } from "@/store/Auth";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 

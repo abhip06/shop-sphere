@@ -6,7 +6,7 @@ export default function NotFound() {
       <h1 className="text-5xl lg:text-8xl">404</h1>
       <h3 className="text-3xl lg:text-4xl">Page not found.</h3>
       <p className="text-sm lg:text-base">Oops! Could not find requested resource.</p>
-      <Link href="/" className="text-blue-400 underline text-sm lg:text-base">Return Home</Link>
+      <Link href="/" className="text-blue-400 underline text-sm lg:text-base">Return to Home</Link>
     </div>
   )
 }

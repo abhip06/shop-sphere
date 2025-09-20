@@ -41,9 +41,17 @@ const FeaturedProducts = () => {
         )
     }
 
+    if(!loading && !products){
+        return (
+            <div className="mt-12 flex justify-center items-center text-lg text-gray-400">
+                No Featured Products found.
+            </div>
+        )
+    }
+
     return (
         <div className="mt-12 flex flex-wrap gap-x-8 gap-y-5 lg:gap-y-16 justify-center">
-            {products.map((product) => (
+            {products?.map((product) => (
                 <div
                     key={product?.id}
                     onClick={() => router.push(`/products/${product?.slug}`)}

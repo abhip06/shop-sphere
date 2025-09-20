@@ -1,6 +1,6 @@
 "use client"
 
-import { capitalizeFirstLetter } from "@/lib/utils";
+// import { capitalizeFirstLetter } from "@/lib/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 

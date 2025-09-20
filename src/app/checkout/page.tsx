@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { lazy, Suspense } from 'react';
 import SingleProductCheckout from './_components/SingleProductCheckout';
 import CartItemsCheckout from './_components/CartItemsCheckout';
 

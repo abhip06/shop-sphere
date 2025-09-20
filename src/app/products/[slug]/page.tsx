@@ -1,7 +1,7 @@
 "use client"
 
-import { authStore } from "@/app/store/Auth";
-import { cartStore } from "@/app/store/Cart";
+import { authStore } from "@/store/Auth";
+import { cartStore } from "@/store/Cart";
 import Add from "@/app/products/_components/Add";
 import ProductImages from "@/app/products/_components/ProductImages"
 import ProductSkeletonLoader from "@/components/ProductSkeletonLoader";

@@ -11,7 +11,7 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import BtnLoader from "@/components/BtnLoader";
-import { authStore } from "@/app/store/Auth";
+import { authStore } from "@/store/Auth";
 
 const SignInForm = () => {
 

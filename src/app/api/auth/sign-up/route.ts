@@ -16,6 +16,8 @@ export async function POST(request: NextRequest) {
         password: string;
     } = await request.json();
 
+    console.log(fullName + " " + email + " " + password);
+
     try {
 
         const validateData = signUpValidation.safeParse({
@@ -38,6 +40,7 @@ export async function POST(request: NextRequest) {
 
         // Check if user already exists
         const existingUser = await db.user.findUnique({ where: { email: email } });
+        console.log(existingUser);
 
         if (existingUser) {
             return Response.json({
